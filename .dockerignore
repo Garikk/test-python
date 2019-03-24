@@ -1,0 +1,8 @@
+.git
+apidoc
+__pycache__/
+pycache
+.vscode
+.pytest_cache
+.idea
+venv

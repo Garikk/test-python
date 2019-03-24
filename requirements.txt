@@ -1,0 +1,11 @@
+Flask
+Flask-Migrate
+Flask-RESTful
+Flask-Script
+Flask-SQLAlchemy
+factory_boy
+psycopg2
+psycopg2-binary
+pytest
+pytest-cov
+SQLAlchemy
