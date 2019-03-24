@@ -55,7 +55,7 @@ def assign_station_fuel(fuel_id, station_id, cost):
     new_fa.fuel_id = fuel_id
     new_fa.station_id = station_id
     new_fa.cost = cost
-    db.session.add(cost)
+    db.session.add(new_fa)
     db.session.commit()
 
 

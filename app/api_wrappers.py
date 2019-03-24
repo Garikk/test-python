@@ -57,6 +57,8 @@ def api_response(fn):
     def wrapper(*args, **kwargs):
         response = fn(*args, **kwargs)
 
-        return response.response()
-
+        try:
+            return response().response()
+        except:
+            print(1)
     return wrapper

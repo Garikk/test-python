@@ -21,7 +21,7 @@ class GasStationFactory(Factory):
 
 class GasStationFuelFactory(Factory):
     class Meta:
-        model = GasStationFuel()
+        model = GasStationFuel
 
     station_id = None
     fuel_id = None

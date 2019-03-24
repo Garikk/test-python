@@ -20,5 +20,4 @@ class FuelRouting(Resource):
         args = stations_locator_schema.load(request.args)
 
         data = manager.stations(args=args)
-
         return svsApiResponse(data=data.data, meta=data.meta)
