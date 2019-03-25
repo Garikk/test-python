@@ -8,7 +8,7 @@ class GasStations(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    is_open = db.Boolean(db.Boolean)
+    is_open = db.Column(db.Boolean)
 
     def __repr__(self):
         return "<id {}>".format(self.id)
@@ -54,6 +54,7 @@ class CarType(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    fuel_type = db.Column(db.Integer, db.ForeignKey("fuel_types.id", onupdate="CASCADE", ondelete="CASCADE"))
     liter_per_km = db.Column(db.Integer)
 
     def __repr__(self):

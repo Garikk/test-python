@@ -23,16 +23,18 @@ def create_station(name="test_station", is_open=True):
     return new_st.id
 
 
-def create_user(name="test_user"):
+def create_user(id, name="test_user"):
     new_us = UserFactory()
+    new_us.id = id
     new_us.name = name
     db.session.add(new_us)
     db.session.commit()
     return new_us.id
 
 
-def create_car(name="test_user", liter_per_100km=10):
+def create_car(id, name="test_user", liter_per_100km=10):
     new_cr = CarTypeFactory()
+    new_cr.id = id
     new_cr.name = name
     new_cr.liter_per_km = liter_per_100km
     db.session.add(new_cr)
@@ -61,45 +63,36 @@ def assign_station_fuel(fuel_id, station_id, cost):
 
 @pytest.fixture()
 def test_db_config():
-    ft1 = create_fuel_type("Gas_92")
-    ft2 = create_fuel_type("Gas_95")
-    ft3 = create_fuel_type("Gas_98")
-    ft4 = create_fuel_type("Gas_diesel")
-
-    car1 = create_car("Ford", 10)
-    car2 = create_car("Lada", 7)
-    car3 = create_car("KIA", 9)
-
-    user = create_user("User1")
-    user2 = create_user("User2")
-    user3 = create_user("User3")
+    user = create_user(1, "User1")
+    user2 = create_user(2, "User2")
+    user3 = create_user(3, "User3")
 
     station_1_open = create_station("ST_1", True)
     station_2_open = create_station("ST_2", True)
     station_3_close = create_station("ST_3", False)
     station_4_open = create_station("ST_4", True)
 
-    assign_station_fuel(fuel_id=ft1, station_id=station_1_open, cost=40)
-    assign_station_fuel(fuel_id=ft2, station_id=station_1_open, cost=44)
-    assign_station_fuel(fuel_id=ft4, station_id=station_1_open, cost=42)
+    assign_station_fuel(fuel_id=1, station_id=station_1_open, cost=40)
+    assign_station_fuel(fuel_id=2, station_id=station_1_open, cost=44)
+    assign_station_fuel(fuel_id=3, station_id=station_1_open, cost=42)
 
-    assign_station_fuel(fuel_id=ft1, station_id=station_2_open, cost=39)
-    assign_station_fuel(fuel_id=ft2, station_id=station_2_open, cost=43)
-    assign_station_fuel(fuel_id=ft4, station_id=station_2_open, cost=41.50)
+    assign_station_fuel(fuel_id=1, station_id=station_2_open, cost=39)
+    assign_station_fuel(fuel_id=2, station_id=station_2_open, cost=43)
+    assign_station_fuel(fuel_id=4, station_id=station_2_open, cost=41.50)
 
-    assign_station_fuel(fuel_id=ft1, station_id=station_3_close, cost=44)
-    assign_station_fuel(fuel_id=ft2, station_id=station_3_close, cost=48)
-    assign_station_fuel(fuel_id=ft3, station_id=station_3_close, cost=46)
+    assign_station_fuel(fuel_id=1, station_id=station_3_close, cost=44)
+    assign_station_fuel(fuel_id=3, station_id=station_3_close, cost=48)
+    assign_station_fuel(fuel_id=4, station_id=station_3_close, cost=46)
 
-    assign_station_fuel(fuel_id=ft1, station_id=station_4_open, cost=46)
-    assign_station_fuel(fuel_id=ft2, station_id=station_4_open, cost=50)
-    assign_station_fuel(fuel_id=ft3, station_id=station_4_open, cost=51)
+    assign_station_fuel(fuel_id=2, station_id=station_4_open, cost=46)
+    assign_station_fuel(fuel_id=3, station_id=station_4_open, cost=50)
+    assign_station_fuel(fuel_id=4, station_id=station_4_open, cost=51)
 
-    create_usercar(user, car1, active=False)
-    create_usercar(user, car2, active=False)
-    create_usercar(user, car3, active=True)
-    create_usercar(user2, car3, active=True)
-    create_usercar(user3, car1, active=True)
+    create_usercar(user, 1, active=False)
+    create_usercar(user, 2, active=False)
+    create_usercar(user, 3, active=True)
+    create_usercar(user2, 3, active=True)
+    create_usercar(user3, 1, active=True)
 
 
 @pytest.fixture()
@@ -111,7 +104,5 @@ def clean_test_data():
     """
     User.query.delete()
     CarUser.query.delete()
-    CarType.query.delete()
     GasStations.query.delete()
     GasStationFuel.query.delete()
-    FuelTypes.query.delete()

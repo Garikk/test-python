@@ -16,8 +16,8 @@ class FuelRouting(Resource):
         @apiVersion 1.0.0
         """
         manager = StationsManager()
-
+        # Раньше, по феншую тут надо было использовать Argparser, но он уже deprecated по этому юзаем marshmellow
         args = stations_locator_schema.load(request.args)
 
-        data = manager.stations(args=args)
-        return svsApiResponse(data=data.data, meta=data.meta)
+        data = manager.stations(args=args.data)
+        return svsApiResponse(data=data)

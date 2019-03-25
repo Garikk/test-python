@@ -20,7 +20,7 @@ class StationsService():
         #
         # Делаем удобный доступ для использования
         ret = {}
-        for item in ret:
+        for item in data:
             ret[item['id']] = item['distance']
 
         return ret

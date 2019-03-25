@@ -2,6 +2,9 @@ from app.exceptions import SvsException
 
 
 class svsApiResponse():
+    """
+    Класс стандартного формата ответа сервиса
+    """
     def __init__(self, status=True, data=None, meta=None, error=None, code=200, hide_data_if_none=False):
         self.status = status
         self.data = data
@@ -33,32 +36,37 @@ def parametrized(dec):
     return layer
 
 
-@parametrized
-def svs_exceptions(fn, bugsnag=None):
+def svs_exceptions(fn):
+    """
+    Декоратор для ресурсов который при возникновении ошибок не обрушивает сераис, а возвращает минимальный комментарий
+    также отсюда хорощо вызывать bugsnag
+    :param fn:
+    :return:
+    """
     def wrapper(*args, **kwargs):
         try:
             return fn(*args, **kwargs)
         except SvsException as ex:
             return svsApiResponse(status=False, error=ex.message, code=ex.result_code)
         except Exception as ex:
-            # Тут должен быть вызов bugsnag для прода
-            # Чтото вроде:
-            # err_string = "Something went wrong"
-            # if bugsnag is not None:
-            #    bugsnag.notify(ex)
-            # else:
-            err_string = str(ex)
-            return svsApiResponse(status=False, error=err_string, code=500)
+            return svsApiResponse(status=False, error=ex, code=500)
 
     return wrapper
 
 
 def api_response(fn):
+    """
+    Декоратор оформления ответа ресурсов в формате flask-restful
+    :param fn:
+    :return:
+    """
+
     def wrapper(*args, **kwargs):
         response = fn(*args, **kwargs)
 
-        try:
+        if isinstance(response, svsApiResponse):
+            return response.response()
+        else:
             return response().response()
-        except:
-            print(1)
+
     return wrapper

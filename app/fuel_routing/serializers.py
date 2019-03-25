@@ -16,10 +16,7 @@ class StationsLocatorGet(Schema):
         required=True, validate=validate_blank('CAR_FUEL_LEVEL'),
         error_messages={'null': 'CAR_FUEL_LEVEL_BLANK', 'required': 'CAR_FUEL_LEVEL'}
     )
-    required_fuel = fields.Integer(reqired=True, validate=validate_blank('FUEL_REQUIRED'),
-                                   error_messages={'null': 'FUEL_REQUIRED_BLANK', 'required': 'FUEL_REQUIRED'}
-                                   )
-    required_fuel_amount = fields.Integer(reqired=True, validate=validate_blank('FUEL_REQUIRED_AMOUNT'),
+    required_fuel = fields.Integer(reqired=True, validate=validate_blank('FUEL_REQUIRED_AMOUNT'),
                                           error_messages={'null': 'FUEL_REQUIRED_AMOUNT_BLANK',
                                                           'required': 'FUEL_REQUIRED_AMOUNT'}
                                           )
