@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     environment:
-      SDATABASE_URL: postgresql://postgres:qwe123@db/postgres
+      DATABASE_URL: postgresql://postgres:qwe123@db/postgres
       PYTHONUNBUFFERED: 1
   db:
     image: postgres:${PG_VERSION:-11-beta4-alpine}
