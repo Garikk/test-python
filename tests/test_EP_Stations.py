@@ -2,7 +2,7 @@ from app import app
 from tests.fixtures import *
 
 
-def test_get_employees_list(clean_test_data, test_db_config):
+def test_get_stations_list(clean_test_data, test_db_config):
     """
     Получаем список заправок
     :return:
